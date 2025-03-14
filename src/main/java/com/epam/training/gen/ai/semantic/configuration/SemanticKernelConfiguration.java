@@ -76,14 +76,9 @@ public class SemanticKernelConfiguration {
 	 * @return an instance of {@link InvocationContext}
 	 */
 	@Bean
-	public InvocationContext invocationContext(
-			@Value("${llm.settings.temperature}") double temperature,
-			@Value("${llm.settings.frequency.penalty}") double frequencyPenalty,
-			@Value("${llm.settings.max.length}") int maxLength) {
+	public InvocationContext invocationContext() {
 		return InvocationContext.builder().withPromptExecutionSettings(PromptExecutionSettings.builder()
-				.withTemperature(temperature)
-				.withFrequencyPenalty(frequencyPenalty)
-				.withMaxTokens(maxLength).build())
+				.withTemperature(1.0).build())
 				.build();
 	}
 

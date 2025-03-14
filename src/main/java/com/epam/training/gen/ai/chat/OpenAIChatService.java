@@ -27,7 +27,7 @@ public class OpenAIChatService implements ChatService {
 
 	@Override
 	public String sendMessage(String prompt) {
-		List<ChatMessageContent<?>> response = chatService.getChatMessageContentsAsync(prompt, kernel, context).block();
+		List<ChatMessageContent<?>> response = chatService.getChatMessageContentsAsync(prompt, null, null).block();
 
 		ChatMessageContent<?> result = CollectionUtil.getLastOrNull(response);
 		return result.getContent();
