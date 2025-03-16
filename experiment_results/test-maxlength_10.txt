@@ -1,0 +1,9 @@
+TEST CASE:
+Prompt:  "I want to find top-10 books about world history"
+Setting: max tokens: 10
+
+TEST RESULTS:
+1. Guns, Germs, and
+
+CONCLUSION:
+The answer was simply capped at 10 tokens, with seemingly no attempts to squeeze a short, but complete answer into the limits.

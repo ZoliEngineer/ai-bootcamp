@@ -76,10 +76,12 @@ public class SemanticKernelConfiguration {
 	 * @return an instance of {@link InvocationContext}
 	 */
 	@Bean
-	public InvocationContext invocationContext() {
-		return InvocationContext.builder().withPromptExecutionSettings(PromptExecutionSettings.builder()
-				.withTemperature(1.0).build())
-				.build();
+	public InvocationContext invocationContext(Map<String, PromptExecutionSettings> promptExecutionsSettingsMap,
+			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName) {
+
+		PromptExecutionSettings promptExecutionSettings = promptExecutionsSettingsMap.get(deploymentOrModelName);
+
+		return InvocationContext.builder().withPromptExecutionSettings(promptExecutionSettings).build();
 	}
 
 	/**
@@ -93,4 +95,5 @@ public class SemanticKernelConfiguration {
 			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName) {
 		return Map.of(deploymentOrModelName, PromptExecutionSettings.builder().withTemperature(1.0).build());
 	}
+
 }
