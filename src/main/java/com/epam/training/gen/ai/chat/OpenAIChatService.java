@@ -31,7 +31,12 @@ public class OpenAIChatService implements ChatService {
 	@Autowired
 	private Kernel kernel;
 	
-	private ChatHistory chatHistory = new ChatHistory();
+	private final ChatHistory chatHistory;
+	
+	public OpenAIChatService() {
+		chatHistory = new ChatHistory();
+		chatHistory.addSystemMessage("Answer like you are talking to a 2 years old toddler.");
+	}
 
 	@Override
 	public String sendMessage(String prompt) {

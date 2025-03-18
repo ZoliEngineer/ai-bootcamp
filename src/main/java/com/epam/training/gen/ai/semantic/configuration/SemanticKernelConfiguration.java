@@ -92,8 +92,9 @@ public class SemanticKernelConfiguration {
 	 */
 	@Bean
 	public Map<String, PromptExecutionSettings> promptExecutionsSettingsMap(
-			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName) {
-		return Map.of(deploymentOrModelName, PromptExecutionSettings.builder().withTemperature(1.0).build());
+			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName, 
+			@Value("${llm.settings.temperature}") double temperature) {
+		return Map.of(deploymentOrModelName, PromptExecutionSettings.builder().withTemperature(temperature).build());
 	}
 
 }
