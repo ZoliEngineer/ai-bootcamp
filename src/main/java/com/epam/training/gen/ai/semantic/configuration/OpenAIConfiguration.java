@@ -3,6 +3,9 @@ package com.epam.training.gen.ai.semantic.configuration;
 import com.azure.ai.openai.OpenAIAsyncClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.core.credential.AzureKeyCredential;
+import com.azure.core.http.policy.HttpLogDetailLevel;
+import com.azure.core.http.policy.HttpLogOptions;
+import com.azure.core.http.policy.HttpResponseLogger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +28,8 @@ public class OpenAIConfiguration {
      */
     @Bean
     public OpenAIAsyncClient openAIAsyncClient(@Value("${client-azureopenai-endpoint}") String endpoint, @Value("${client-azureopenai-key}") String key) {
-        return new OpenAIClientBuilder()
+    	return new OpenAIClientBuilder()
+    			.httpLogOptions(new HttpLogOptions().setLogLevel(HttpLogDetailLevel.BODY_AND_HEADERS))
                 .credential(new AzureKeyCredential(key))
                 .endpoint(endpoint)
                 .buildAsyncClient();

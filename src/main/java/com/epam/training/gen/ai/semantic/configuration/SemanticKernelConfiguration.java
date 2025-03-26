@@ -5,16 +5,19 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import com.azure.ai.openai.OpenAIAsyncClient;
 import com.epam.training.gen.ai.semantic.plugins.SimplePlugin;
 import com.microsoft.semantickernel.Kernel;
 import com.microsoft.semantickernel.aiservices.openai.chatcompletion.OpenAIChatCompletion;
+import com.microsoft.semantickernel.aiservices.openai.textcompletion.OpenAITextGenerationService;
 import com.microsoft.semantickernel.orchestration.InvocationContext;
 import com.microsoft.semantickernel.orchestration.PromptExecutionSettings;
 import com.microsoft.semantickernel.plugin.KernelPlugin;
 import com.microsoft.semantickernel.plugin.KernelPluginFactory;
 import com.microsoft.semantickernel.services.chatcompletion.ChatCompletionService;
+import com.microsoft.semantickernel.services.textcompletion.TextGenerationService;
 
 /**
  * Configuration class for setting up Semantic Kernel components.
@@ -36,10 +39,21 @@ public class SemanticKernelConfiguration {
 	 *                              with Azure OpenAI
 	 * @return an instance of {@link ChatCompletionService}
 	 */
-	@Bean
+	@Bean(name = "chat")
+	@Primary
 	public ChatCompletionService chatCompletionService(
-			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName,
+			@Value("${client-azureopenai-deployment-name.chat}") String deploymentOrModelName,
 			OpenAIAsyncClient openAIAsyncClient) {
+		
+		return OpenAIChatCompletion.builder().withModelId(deploymentOrModelName)
+				.withOpenAIAsyncClient(openAIAsyncClient).build();
+	}
+	
+	@Bean(name = "text")
+	public ChatCompletionService textGenerationService(
+			@Value("${client-azureopenai-deployment-name.text}") String deploymentOrModelName,
+			OpenAIAsyncClient openAIAsyncClient) {
+		
 		return OpenAIChatCompletion.builder().withModelId(deploymentOrModelName)
 				.withOpenAIAsyncClient(openAIAsyncClient).build();
 	}
@@ -66,6 +80,7 @@ public class SemanticKernelConfiguration {
 	@Bean
 	public Kernel kernel(ChatCompletionService chatCompletionService, KernelPlugin kernelPlugin) {
 		return Kernel.builder().withAIService(ChatCompletionService.class, chatCompletionService)
+				.withServiceSelector(null)
 				.withPlugin(kernelPlugin).build();
 	}
 
@@ -77,7 +92,7 @@ public class SemanticKernelConfiguration {
 	 */
 	@Bean
 	public InvocationContext invocationContext(Map<String, PromptExecutionSettings> promptExecutionsSettingsMap,
-			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName) {
+			@Value("${client-azureopenai-deployment-name.chat}") String deploymentOrModelName) {
 
 		PromptExecutionSettings promptExecutionSettings = promptExecutionsSettingsMap.get(deploymentOrModelName);
 
@@ -92,7 +107,7 @@ public class SemanticKernelConfiguration {
 	 */
 	@Bean
 	public Map<String, PromptExecutionSettings> promptExecutionsSettingsMap(
-			@Value("${client-azureopenai-deployment-name}") String deploymentOrModelName, 
+			@Value("${client-azureopenai-deployment-name.chat}") String deploymentOrModelName, 
 			@Value("${llm.settings.temperature}") double temperature) {
 		return Map.of(deploymentOrModelName, PromptExecutionSettings.builder().withTemperature(temperature).build());
 	}
