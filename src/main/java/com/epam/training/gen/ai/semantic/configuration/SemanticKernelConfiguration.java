@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.azure.ai.openai.OpenAIAsyncClient;
-import com.epam.training.gen.ai.semantic.plugins.SimplePlugin;
+import com.epam.training.gen.ai.semantic.plugins.CalculatorPlugin;
+import com.epam.training.gen.ai.semantic.plugins.WeatherPlugin;
 import com.microsoft.semantickernel.Kernel;
 import com.microsoft.semantickernel.aiservices.openai.chatcompletion.OpenAIChatCompletion;
-import com.microsoft.semantickernel.aiservices.openai.textcompletion.OpenAITextGenerationService;
 import com.microsoft.semantickernel.orchestration.InvocationContext;
 import com.microsoft.semantickernel.orchestration.PromptExecutionSettings;
+import com.microsoft.semantickernel.orchestration.ToolCallBehavior;
 import com.microsoft.semantickernel.plugin.KernelPlugin;
 import com.microsoft.semantickernel.plugin.KernelPluginFactory;
 import com.microsoft.semantickernel.services.chatcompletion.ChatCompletionService;
-import com.microsoft.semantickernel.services.textcompletion.TextGenerationService;
 
 /**
  * Configuration class for setting up Semantic Kernel components.
@@ -58,15 +58,7 @@ public class SemanticKernelConfiguration {
 				.withOpenAIAsyncClient(openAIAsyncClient).build();
 	}
 
-	/**
-	 * Creates a {@link KernelPlugin} bean using a simple plugin.
-	 *
-	 * @return an instance of {@link KernelPlugin}
-	 */
-	@Bean
-	public KernelPlugin kernelPlugin() {
-		return KernelPluginFactory.createFromObject(new SimplePlugin(), "Simple Plugin");
-	}
+	
 
 	/**
 	 * Creates a {@link Kernel} bean to manage AI services and plugins.
@@ -78,10 +70,11 @@ public class SemanticKernelConfiguration {
 	 * @return an instance of {@link Kernel}
 	 */
 	@Bean
-	public Kernel kernel(ChatCompletionService chatCompletionService, KernelPlugin kernelPlugin) {
+	public Kernel kernel(ChatCompletionService chatCompletionService) {
 		return Kernel.builder().withAIService(ChatCompletionService.class, chatCompletionService)
-				.withServiceSelector(null)
-				.withPlugin(kernelPlugin).build();
+				.withPlugin(KernelPluginFactory.createFromObject(new WeatherPlugin(), "getWeatherForecast"))
+				.withPlugin(KernelPluginFactory.createFromObject(new CalculatorPlugin(), "basicArithmeticCalculator"))
+				.build();
 	}
 
 	/**
@@ -96,7 +89,10 @@ public class SemanticKernelConfiguration {
 
 		PromptExecutionSettings promptExecutionSettings = promptExecutionsSettingsMap.get(deploymentOrModelName);
 
-		return InvocationContext.builder().withPromptExecutionSettings(promptExecutionSettings).build();
+		return InvocationContext.builder()
+				.withPromptExecutionSettings(promptExecutionSettings)
+				.withToolCallBehavior(ToolCallBehavior.allowAllKernelFunctions(true))
+				.build();
 	}
 
 	/**
