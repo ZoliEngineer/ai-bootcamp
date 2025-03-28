@@ -1,0 +1,31 @@
+TEST CASE:
+Prompt:  "I want to find top-10 books about world history"
+Setting: rlab-mistral-instruct
+
+TEST RESULTS:
+Finding top-10 books about world history can be subjective, as different readers and experts may have varying opinions based on their interests and perspectives. However, here are some highly regarded books that cover significant periods and themes in world history:
+
+1. **"A History of the Modern World" by R.R. Palmer and Joel Colton** - A comprehensive overview of global history from the Renaissance to the present day.
+
+2. **"Guns, Germs, and Steel" by Jared Diamond** - This Pulitzer Prize-winning book explores how geography and biogeography have shaped human history and global development.
+
+3. **"The Rise and Fall of the Third Reich" by William L. Shirer** - A definitive history of Nazi Germany, often cited for its thoroughness and insight.
+
+4. **"The Story of Civilization" by Will Durant and Ariel Durant** - An 11-volume series that covers the history of Western civilization from its earliest beginnings to the present.
+
+5. **"The Silk Roads: A New History of the World" by Peter Frankopan** - Focuses on the economic and cultural exchanges facilitated by the Silk Roads, challenging Eurocentric views of history.
+
+6. **"The Stanford History of Western Civilization"** - A multivolume series edited by Crauford D. Goodrich, which covers various periods and aspects of Western history.
+
+7. **"The Half-Has Been Told" by Tommy Trimble** - A popular historical novel that provides perspective on the African  Legacy
+
+8. **"The Antiguae-Wal áusberger" by Steve Shellly-Walander"**  Not exactly a throurough book but worth named it gives the starter for Historical anime watchers.
+
+9. **"The For the Egyptians" by Sarah Bugarajaver"**- Its a great book from new author explaining the economical and political situation for egyptians
+
+10. **"The Day of judgement" By Bebop"** - A Science Fiction book takes a look at the Bible.
+
+These books offer a range of perspectives and depths of exploration, from broad overviews to in-depth examinations of specific periods or themes. Whether you're interested in the big picture or detailed narratives, these works should provide a solid foundation for understanding world history.
+
+CONCLUSION:
+As a text generation service, it is a lot more verbose in its response. Apart from the list itself, it also appended description for the books.

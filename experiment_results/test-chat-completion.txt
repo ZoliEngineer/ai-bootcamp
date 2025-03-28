@@ -1,0 +1,18 @@
+TEST CASE:
+Prompt:  "I want to find top-10 books about world history"
+Setting: gpt-35-turbo
+
+TEST RESULTS:
+1. "Guns, Germs, and Steel: The Fates of Human Societies" by Jared Diamond
+2. "Sapiens: A Brief History of Humankind" by Yuval Noah Harari
+3. "A People's History of the World" by Chris Harman
+4. "The Silk Roads: A New History of the World" by Peter Frankopan
+5. "1491: New Revelations of the Americas Before Columbus" by Charles C. Mann
+6. "The Origins of Political Order: From Prehuman Times to the French Revolution" by Francis Fukuyama
+7. "Empires of the Silk Road: A History of Central Eurasia from the Bronze Age to the Present" by Christopher I. Beckwith
+8. "The Penguin History of the World" by J.M. Roberts
+9. "The Landmark Thucydides: A Comprehensive Guide to the Peloponnesian War" edited by Robert B. Strassler
+10. "The Rise and Fall of the Great Powers: Economic Change and Military Conflict from 1500 to 2000" by Paul Kennedy
+
+CONCLUSION:
+It is a simple list of the books I was asking for, nothing else.
