@@ -18,6 +18,7 @@ import com.microsoft.semantickernel.Kernel;
 import com.microsoft.semantickernel.implementation.CollectionUtil;
 import com.microsoft.semantickernel.orchestration.FunctionInvocation;
 import com.microsoft.semantickernel.orchestration.InvocationContext;
+import com.microsoft.semantickernel.services.ServiceNotFoundException;
 import com.microsoft.semantickernel.services.chatcompletion.ChatCompletionService;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import com.microsoft.semantickernel.services.chatcompletion.ChatMessageContent;
@@ -47,7 +48,8 @@ public class OpenAIChatService implements ChatService {
 	@Override
 	public String sendMessage(String prompt) {		
 		chatHistory.addUserMessage(prompt);
-		List<ChatMessageContent<?>> response = chatService.getChatMessageContentsAsync(chatHistory, null, null).block();		
+		
+		List<ChatMessageContent<?>> response = chatService.getChatMessageContentsAsync(chatHistory, kernel, context).block();	
 		
 		ChatMessageContent<?> result = CollectionUtil.getLastOrNull(response);
 		chatHistory.addMessage(result);
