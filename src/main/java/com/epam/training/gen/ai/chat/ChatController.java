@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.epam.training.gen.ai.embedding.SemanticSearchService;
 
 @RestController
 public class ChatController {
@@ -19,6 +20,9 @@ public class ChatController {
 	
 	@Autowired
 	private OpenAITextService textService;
+	
+	@Autowired
+	private SemanticSearchService semanticSearchService;
 
 	@GetMapping("/chat")
 	public ResponseEntity<Map<String, String>> chat(@RequestParam String prompt) {
@@ -37,6 +41,18 @@ public class ChatController {
 		log.info("User prompt: " + prompt);
 
 		String result = textService.sendMessage(prompt);
+		log.info("Chat-bot response: " + result);
+
+		Map<String, String> response = new HashMap<>();
+		response.put("output", result);
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<Map<String, String>> embedding(@RequestParam String prompt) {
+		log.info("User prompt: " + prompt);
+
+		String result = semanticSearchService.getBestMatch(prompt);
 		log.info("Chat-bot response: " + result);
 
 		Map<String, String> response = new HashMap<>();

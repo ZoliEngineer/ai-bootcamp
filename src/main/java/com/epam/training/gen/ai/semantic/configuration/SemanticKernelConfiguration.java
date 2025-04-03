@@ -45,6 +45,7 @@ public class SemanticKernelConfiguration {
 			@Value("${client-azureopenai-deployment-name.chat}") String deploymentOrModelName,
 			OpenAIAsyncClient openAIAsyncClient) {
 		
+		
 		return OpenAIChatCompletion.builder().withModelId(deploymentOrModelName)
 				.withOpenAIAsyncClient(openAIAsyncClient).build();
 	}
