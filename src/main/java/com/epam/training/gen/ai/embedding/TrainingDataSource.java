@@ -13,9 +13,7 @@ public class TrainingDataSource {
 
 	public List<String> getData() throws IOException {
 		Path resourcePath = Paths.get("src/main/resources", "example-texts.txt");		
-		List<String> data = Files.readAllLines(resourcePath);
-		
-		log.info(data.toString());
+		List<String> data = Files.readAllLines(resourcePath);		
 		
 		return data;
 	}

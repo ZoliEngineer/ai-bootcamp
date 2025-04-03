@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class SemanticSearchService {
 	
 	@Autowired
@@ -23,7 +25,7 @@ public class SemanticSearchService {
 				vectorDatabase.insert(embeddingGenerator.getEmbeddingFor(dataLine), dataLine);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Error during database initialization", e);
 		}
 	}
 
