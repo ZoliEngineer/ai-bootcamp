@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.training.gen.ai.embedding.SemanticSearchService;
+import com.epam.training.gen.ai.rag.DocumentSearchService;
 
 @RestController
 public class ChatController {
@@ -23,6 +24,9 @@ public class ChatController {
 	
 	@Autowired
 	private SemanticSearchService semanticSearchService;
+	
+	@Autowired
+	private DocumentSearchService documentSearchService;
 
 	@GetMapping("/chat")
 	public ResponseEntity<Map<String, String>> chat(@RequestParam String prompt) {
@@ -53,6 +57,18 @@ public class ChatController {
 		log.info("User prompt: " + prompt);
 
 		String result = semanticSearchService.getBestMatch(prompt);
+		log.info("Chat-bot response: " + result);
+
+		Map<String, String> response = new HashMap<>();
+		response.put("output", result);
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("/augment")
+	public ResponseEntity<Map<String, String>> augment(@RequestParam String prompt) {
+		log.info("User prompt: " + prompt);
+
+		String result = documentSearchService.augmentedQuery(prompt);
 		log.info("Chat-bot response: " + result);
 
 		Map<String, String> response = new HashMap<>();
