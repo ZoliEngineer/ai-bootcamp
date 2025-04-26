@@ -3,6 +3,7 @@ package com.epam.training.gen.ai.embedding;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 @Repository
