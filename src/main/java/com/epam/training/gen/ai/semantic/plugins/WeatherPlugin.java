@@ -1,9 +1,8 @@
 package com.epam.training.gen.ai.semantic.plugins;
 
 import org.apache.logging.log4j.util.Strings;
-
-import com.microsoft.semantickernel.semanticfunctions.annotations.DefineKernelFunction;
-import com.microsoft.semantickernel.semanticfunctions.annotations.KernelFunctionParameter;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,11 +15,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class WeatherPlugin {
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WeatherPlugin.class);
 
-	@DefineKernelFunction(name = "getWeatherForecast", description = "Gets weather forecast for a location")
+	@Tool(description = "Gets weather forecast for a location")
 	public String getWeatherForecast(
-			@KernelFunctionParameter(description = "City name which the weather forecast is for", name = "city") String city) {
+			@ToolParam(description =  "City name which the weather forecast is for") String city) {
 		log.info("Weather plugin was called with city: [{}]", city);
 		
 		return getMockWeatherForecast(city);
